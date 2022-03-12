@@ -7,13 +7,19 @@ const { db, seedDb, Hero, Game } = require('./src/db');
 app.use('/src', express.static(path.join(__dirname, '/src')));
 app.use('/public', express.static(path.join(__dirname, '/public')));
 
-app.post('/api/heroes', (req, res, next) => {
-    const hero = {
-        name: req.body.name,
-        weaponType: req.body.weaponType,
-        gameId: req.body.gameId
+//app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.post('/', async (req, res, next) => {
+    try {
+        const game = {
+            name: req.body.name,
+            year: req.body.year
+        };
+        await Game.create(game);
+        res.status(201).redirect('/');
+    } catch(err) {
+        next(err);
     }
-    res.status(201).send(hero);
 });
 
 app.get('/api/heroes', async(req, res, next) => {

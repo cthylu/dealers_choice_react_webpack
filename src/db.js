@@ -19,7 +19,7 @@ const Game = db.define('game', {
         allowNull: false
     },
     year: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(10),
         allowNull: false
     }
 });
@@ -38,10 +38,10 @@ Hero.getGameName = function () {
 async function seedDb() {
     try {
         await db.sync({force: true});
-        const FE_ME = await Game.create({name: 'Fire Emblem: Mystery of the Emblem', year: 1994});
-        const FE_BB = await Game.create({name: 'Fire Emblem: The Blazing Blade', year: 2003});
-        const FE_SS = await Game.create({name: 'Fire Emblem: The Sacred Stones', year: 2004});
-        const FE_A = await Game.create({name: 'Fire Emblem: Awakening', year: 1994});
+        const FE_ME = await Game.create({name: 'Fire Emblem: Mystery of the Emblem', year: '1994'});
+        const FE_BB = await Game.create({name: 'Fire Emblem: The Blazing Blade', year: '2003'});
+        const FE_SS = await Game.create({name: 'Fire Emblem: The Sacred Stones', year: '2004'});
+        const FE_A = await Game.create({name: 'Fire Emblem: Awakening', year: '1994'});
 
         await Hero.create({name: 'Marth', weaponType: 'Sword', gameId: FE_ME.id});
         await Hero.create({name: 'Eliwood', weaponType: 'Sword', gameId: FE_BB.id});

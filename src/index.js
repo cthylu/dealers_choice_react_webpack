@@ -35,6 +35,7 @@ const GameList = (props) => {
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
+                    <th>Year</th>
                 </tr>
                 {
                     games.map((game) => {
@@ -42,12 +43,28 @@ const GameList = (props) => {
                             <tr>
                                 <td>{game.id}</td>
                                 <td>{game.name}</td>
+                                <td>{game.year}</td>
                             </tr>
                         )
                     })
                 }
             </tbody>
         </table>
+    );
+}
+
+const GameForm = (props) => {
+    return (
+        <div>
+            <h2>Add a Game!</h2>
+            <form method="POST">
+                <label>Game Name:</label>
+                <input type="text" name="name" />
+                <label>Year:</label>
+                <input type="text" name="year" />
+                <button>Submit</button>
+            </form>
+        </div>
     );
 }
 
@@ -58,6 +75,7 @@ class Main extends React.Component {
             heroes: [],
             games: []
         }
+        this.addGame = this.addGame.bind(this);
     }
 
     async componentDidMount() {
@@ -72,12 +90,22 @@ class Main extends React.Component {
         }
     }
 
+    async addGame() {
+        try {
+            const response = await axios.get(`/api/games`);
+            this.setState({ heroes: [response.data] })
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     render() {
         return (
             <div>
                 <h1>Fire Emblem Heroes</h1>
                 <HeroList heroes={this.state.heroes} />
                 <GameList games={this.state.games} />
+                <GameForm addGame={this.state.addGame}/>
             </div>
         );
     }
