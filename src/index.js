@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDom from "react-dom";
+import React from 'react'
+import ReactDOM from 'react-dom'
 import axios from 'axios';
 
 const HeroList = (props) => {
@@ -82,5 +82,6 @@ class Main extends React.Component {
         );
     }
 }
+
 const root = document.querySelector('#root');
 ReactDOM.render(<Main />, root);
