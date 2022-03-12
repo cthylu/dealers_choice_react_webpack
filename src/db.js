@@ -27,7 +27,7 @@ const Game = db.define('game', {
 Hero.belongsTo(Game);
 Game.hasMany(Hero);
 
-Hero.getGameName = function () {
+Hero.getGameNames = function () {
     return this.findAll( {
         include: [
             {model: Game}
@@ -41,7 +41,7 @@ async function seedDb() {
         const FE_ME = await Game.create({name: 'Fire Emblem: Mystery of the Emblem', year: '1994'});
         const FE_BB = await Game.create({name: 'Fire Emblem: The Blazing Blade', year: '2003'});
         const FE_SS = await Game.create({name: 'Fire Emblem: The Sacred Stones', year: '2004'});
-        const FE_A = await Game.create({name: 'Fire Emblem: Awakening', year: '1994'});
+        const FE_A = await Game.create({name: 'Fire Emblem: Awakening', year: '2012'});
 
         await Hero.create({name: 'Marth', weaponType: 'Sword', gameId: FE_ME.id});
         await Hero.create({name: 'Eliwood', weaponType: 'Sword', gameId: FE_BB.id});

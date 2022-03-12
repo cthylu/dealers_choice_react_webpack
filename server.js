@@ -9,13 +9,28 @@ app.use('/public', express.static(path.join(__dirname, '/public')));
 
 //app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.post('/', async (req, res, next) => {
+app.post('/api/games', async (req, res, next) => {
     try {
         const game = {
             name: req.body.name,
             year: req.body.year
         };
         await Game.create(game);
+        res.status(201).redirect('/');
+    } catch(err) {
+        next(err);
+    }
+});
+app.post('/api/heroes', async (req, res, next) => {
+    try {
+        const hero = {
+            name: req.body.name,
+            weaponType: req.body.weapon,
+            gameId: req.body.game
+        };
+        await Hero.create(hero, {
+            include: [Game]
+        });
         res.status(201).redirect('/');
     } catch(err) {
         next(err);
